@@ -5,12 +5,15 @@ Refer/Use configuration: https://github.com/bkatwal/kafka-solr-sink-connector/tr
 
 Mandatory Fields:
 
-topics=<your toipic name>
+topics=
+<your toipic name>
   
-solr.collection=<your solr collection name>
+solr.collection=
+<your solr collection name>
   
-solr.zkhosts=<comma separated zookeeper hosts>
+solr.zkhosts=
+<comma separated zookeeper hosts>
   
   example: localhost:2181,localhost:2183,localhost:2182
   
-This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field "_delete_" in values. Based on boolean values(true/false) in _delete_, delete/insert operation is triggered
+This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field "__delete__" in values. Based on boolean values(true/false) in __delete__, delete/insert operation is triggered

@@ -39,30 +39,6 @@ public class PlainJsonSolrDocMappersImpl implements JsonSolrDocMapper {
         return toSolrDoc(obj);
     }
 
-   /* @Override
-    public List<SolrInputDocument> toSolrDocs(List<Map<String, Object>> objectsMap) {
-        List<SolrInputDocument> solrInputDocuments = new LinkedList<>();
-        for (Map<String, Object> object : objectsMap) {
-            solrInputDocuments.add(toSolrDoc(object));
-        }
-        return solrInputDocuments;
-    }
-
-    @Override
-    public List<Map<String, Object>> jsonToObjectsMap(String json) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<List<Map<String, Object>>>() {
-        });
-
-    }
-
-    @Override
-    public Map<String, Object> jsonToSingleRowObjectMap(String objectJson) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(objectJson, new TypeReference<Map<String, Object>>() {
-        });
-    }
-*/
     private void addFieldsToDoc(Map<String, Object> objectMap, SolrInputDocument doc) {
         for (String key : objectMap.keySet()) {
             Object val = objectMap.get(key);

@@ -1,14 +1,14 @@
 package com.bkatwal.kafkaproject.utils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.connect.json.JsonConverter;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.io.InvalidObjectException;
+import java.util.Collections;
+import java.util.Map;
 
 
 /**
@@ -28,25 +28,31 @@ public class PlainJsonSolrDocMappersImpl implements JsonSolrDocMapper {
     }
 
     @Override
-    public SolrInputDocument convertToSolrDocument(SinkRecord sinkRecord) {
+    public SolrInputDocument convertToSolrDocument(SinkRecord sinkRecord) throws InvalidObjectException {
+
+        //for now throwing exception for any other type which is not schemaless json
+        //TODO need to support other types
+        if (!(sinkRecord.value() instanceof Map)) {
+            throw new InvalidObjectException("Data format is not schemaless json.");
+        }
 
         Map<String, Object> obj = (Map<String, Object>) sinkRecord.value();
 
-        JsonConverter  jsonConverter = new JsonConverter();
+        JsonConverter jsonConverter = new JsonConverter();
 
         jsonConverter.configure(Collections.singletonMap("schemas.enable", "false"), false);
 
         return toSolrDoc(obj);
     }
 
-    private void addFieldsToDoc(Map<String, Object> objectMap, SolrInputDocument doc) {
-        for (String key : objectMap.keySet()) {
-            Object val = objectMap.get(key);
-            if (val != null) {
-                doc.setField(key, val);
-            }
 
-        }
+    private void addFieldsToDoc(Map<String, Object> objectMap, SolrInputDocument doc) {
+
+        objectMap.forEach((key, val) -> {
+            if (val != null)
+                doc.setField(key, val);
+        });
+
     }
 
 

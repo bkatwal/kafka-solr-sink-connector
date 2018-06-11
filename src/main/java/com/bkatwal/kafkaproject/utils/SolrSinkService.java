@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class SolrSinkService implements SinkService<String, SinkRecord> {
     }
 
     @Override
-    public boolean insert(final String id, final SinkRecord record) {
+    public boolean insert(final String id, final SinkRecord record) throws InvalidObjectException {
         UpdateResponse updateResponse = null;
         SolrInputDocument solrInputDocument = jsonSolrDocMapper.convertToSolrDocument(record);
         try {

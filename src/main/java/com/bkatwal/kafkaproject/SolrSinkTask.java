@@ -10,6 +10,7 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InvalidObjectException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -56,7 +57,11 @@ public class SolrSinkTask extends SinkTask {
             if (isDeleteRequest(delVal)) {
                 sinkService.deleteById(id);
             } else {
-                sinkService.insert(id, record);
+                try {
+                    sinkService.insert(id, record);
+                } catch (InvalidObjectException e) {
+                    e.printStackTrace();
+                }
             }
 
 

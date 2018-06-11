@@ -13,4 +13,4 @@ solr.zkhosts=\<comma separated zookeeper hosts\>
   
   example: localhost:2181,localhost:2183,localhost:2182
   
-This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field "\_delete\_" in values. Based on boolean values(true/false) in \_delete\_, delete/insert operation is triggered
+This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field "\_delete\_"(no need to maintain this in solr/solr schema file) in values, this field will be removed before indexing data to solr. Based on boolean values(true/false) in \_delete\_, delete/insert operation is triggered

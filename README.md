@@ -17,4 +17,4 @@ solr.zkhosts=comma separated zookeeper hosts
  </code>
 </pre>
 
-This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field "`_delete_`"(no need to maintain this in solr/solr schema file) in values, this field will be removed before indexing data to solr. Based on boolean values(true/false) in `_delete_`, delete/insert operation is triggered
+This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field `_delete_` in values(no need to maintain this field in solr/solr schema file), this field will be removed before indexing data to solr. Based on boolean values(true/false) in `_delete_`, delete/insert operation is triggered

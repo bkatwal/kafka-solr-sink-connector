@@ -1,5 +1,5 @@
 # kafka-solr-sink-connector
-This is simple JSON based solr sink kafka connector, uses solr cloud
+This is simple Java based solr sink kafka connector, that takes json data from kafka topic and push to solr, uses solr cloud
 
 Refer/Use configuration: https://github.com/bkatwal/kafka-solr-sink-connector/tree/master/config
 

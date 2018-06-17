@@ -4,9 +4,9 @@ import com.bkatwal.kafkaproject.utils.SinkService;
 import com.bkatwal.kafkaproject.utils.SolrSinkService;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,31 +39,37 @@ public class SolrSinkTask extends SinkTask {
         for (SinkRecord record : kafkaRecords) {
             String id = record.key() != null ? record.key().toString() : null;
 
+            Schema valueSchema = record.valueSchema();
 
-            if (record.value() == null) {
-                log.error("No value passed for doc ID, {}", id);
-                continue;
-            }
+            //not a plain json data/schema less data
+            //Expecting schema less record
+            //TODO handle schema based record later
+            if (valueSchema == null) {
 
-            UpdateResponse updateResponse;
-            Map<String, Object> jsonValueMap = (Map<String, Object>) record.value();
+                if (record.value() == null) {
+                    log.error("No value passed for doc ID, {}", id);
+                    continue;
+                }
 
-            Object delVal = jsonValueMap.get("_delete_");
+                Map<String, Object> jsonValueMap = (Map<String, Object>) record.value();
 
-            //delete the field "_delete_" after reading the value from it
-            jsonValueMap.remove("_delete_");
+                Object delVal = jsonValueMap.get("_delete_");
 
-            //if _delete_ is passed in doc and is false, will try to delete doc
-            if (isDeleteRequest(delVal)) {
-                sinkService.deleteById(id);
-            } else {
-                try {
-                    sinkService.insert(id, record);
-                } catch (InvalidObjectException e) {
-                    e.printStackTrace();
+                //delete the field "_delete_" after reading the value from it
+                jsonValueMap.remove("_delete_");
+
+                //if _delete_ is passed in doc and is false, will try to delete doc
+                if (isDeleteRequest(delVal)) {
+                    sinkService.deleteById(id);
+                } else {
+                    try {
+                        sinkService.insert(id, record);
+                    } catch (InvalidObjectException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
+            log.error("Check if record in topic is plain json data and value is schema less. Set schema.enable=false for value.");
 
         }
 

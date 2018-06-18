@@ -1,6 +1,7 @@
 package com.bkatwal.kafkaproject.utils;
 
 import com.bkatwal.kafkaproject.SolrSinkConnectorConfig;
+import org.apache.kafka.connect.errors.RetriableException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,25 +48,23 @@ public class SolrSinkService implements SinkService<String, SinkRecord> {
         UpdateResponse updateResponse = null;
         try {
             updateResponse = cloudSolrClient.deleteById(collection, id, 10);
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SolrServerException | IOException e) {
+            log.error("Unable to send delete request to solr");
+            throw new RetriableException(e);
         }
         log.debug("Document {}, deleted in: {}", id, updateResponse.getQTime());
         return true;
     }
 
     @Override
-    public boolean insert(final String id, final SinkRecord record) throws InvalidObjectException {
+    public boolean insert(final String id, final SinkRecord record){
         UpdateResponse updateResponse = null;
         SolrInputDocument solrInputDocument = jsonSolrDocMapper.convertToSolrDocument(record);
         try {
             updateResponse = cloudSolrClient.add(collection, solrInputDocument, 10);
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SolrServerException | IOException e) {
+            log.error("Unable to send update request to solr");
+            throw new RetriableException(e);
         }
         log.debug("Document {}, added in: {}", id, updateResponse.getQTime());
         return true;

@@ -1,12 +1,12 @@
 package com.bkatwal.kafkaproject.utils;
 
+import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.json.JsonConverter;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InvalidObjectException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -28,12 +28,12 @@ public class PlainJsonSolrDocMappersImpl implements JsonSolrDocMapper {
     }
 
     @Override
-    public SolrInputDocument convertToSolrDocument(SinkRecord sinkRecord) throws InvalidObjectException {
+    public SolrInputDocument convertToSolrDocument(SinkRecord sinkRecord){
 
         //for now throwing exception for any other type which is not schemaless json
         //TODO need to support other types
         if (!(sinkRecord.value() instanceof Map)) {
-            throw new InvalidObjectException("Data format is not schemaless json.");
+            throw new ConnectException("Record Value is not schemaless json.");
         }
 
         Map<String, Object> obj = (Map<String, Object>) sinkRecord.value();

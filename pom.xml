@@ -75,13 +75,17 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.5.3</version>
+
                 <configuration>
+                    <finalName>bkatwal-kafka-connect-solr-sink-${pom.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
                         <descriptor>src/main/assembly/package.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
                     <execution>
+
                         <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>

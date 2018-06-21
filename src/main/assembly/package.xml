@@ -11,7 +11,7 @@
   <fileSets>
     <fileSet>
       <directory>${project.basedir}</directory>
-      <outputDirectory>share/doc/${project.name}/</outputDirectory>
+      <outputDirectory>doc</outputDirectory>
       <includes>
         <include>README*</include>
         <include>LICENSE*</include>
@@ -20,8 +20,15 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>${project.basedir}</directory>
+      <outputDirectory>.</outputDirectory>
+      <includes>
+        <include>manifest.json</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>${project.basedir}/config</directory>
-      <outputDirectory>etc/${project.name}</outputDirectory>
+      <outputDirectory>etc</outputDirectory>
       <includes>
         <include>*</include>
       </includes>
@@ -29,7 +36,7 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>share/java/${project.name}</outputDirectory>
+      <outputDirectory>lib</outputDirectory>
       <useProjectArtifact>true</useProjectArtifact>
       <useTransitiveFiltering>true</useTransitiveFiltering>
       <excludes>

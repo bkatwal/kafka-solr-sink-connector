@@ -49,7 +49,7 @@ public class SolrSinkTask extends SinkTask {
     }
 
     @Override
-    public void put(Collection<SinkRecord> kafkaRecords) {
+    public void put(Collection<SinkRecord> kafkaRecords){
 
         for (SinkRecord record : kafkaRecords) {
             String id = record.key() != null ? record.key().toString() : null;
@@ -61,11 +61,6 @@ public class SolrSinkTask extends SinkTask {
             //TODO handle schema based record later
             if (valueSchema == null) {
 
-                if (record.value() == null) {
-                    log.error("No value passed for doc ID, {}", id);
-                    continue;
-                }
-
                 Map<String, Object> jsonValueMap = (Map<String, Object>) record.value();
 
                 Object delVal = jsonValueMap.get("_delete_");
@@ -73,8 +68,9 @@ public class SolrSinkTask extends SinkTask {
                 //delete the field "_delete_" after reading the value from it
                 jsonValueMap.remove("_delete_");
 
-                //if _delete_ is passed in doc and is false, will try to delete doc
-                if (isDeleteRequest(delVal)) {
+                //if _delete_ field is passed as false in value or if value is null, respective
+                // doc will be deleted from solr
+                if (isDeleteRequest(delVal) || record.value() == null) {
 
                     sinkService.deleteById(id);
                     

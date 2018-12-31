@@ -17,13 +17,13 @@
 
 package com.bkatwal.kafkaproject;
 
-import org.junit.Test;
+import static com.bkatwal.kafkaproject.SolrSinkConnectorConfig.COLLECTION_CONFIG;
+import static com.bkatwal.kafkaproject.SolrSinkConnectorConfig.SOLRMODE_CONFIG;
+import static com.bkatwal.kafkaproject.SolrSinkConnectorConfig.SOLRURL_CONFIG;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.bkatwal.kafkaproject.SolrSinkConnectorConfig.COLLECTION_CONFIG;
-import static com.bkatwal.kafkaproject.SolrSinkConnectorConfig.ZKHOSTS_CONFIG;
+import org.junit.Test;
 
 public class SolrSinkTaskTest {
 
@@ -32,8 +32,9 @@ public class SolrSinkTaskTest {
 
   private Map<String, String> initialConfig() {
     Map<String, String> baseProps = new HashMap<>();
-    baseProps.put(ZKHOSTS_CONFIG, "localhost:2182,localhost:2183,localhost:2184");
+    baseProps.put(SOLRURL_CONFIG, "localhost:2182,localhost:2183,localhost:2184");
     baseProps.put(COLLECTION_CONFIG, "asda-recipe-topic");
+    baseProps.put(SOLRMODE_CONFIG, "CLOUD");
     return baseProps;
   }
 

@@ -7,7 +7,7 @@ Note: Only JSON data is supported and keep `schemas.enable=false` for value conv
 
 Config Name|Description|Config Value|Is Mandatory?|
 -----------|-----------|------------|----|
-topics|topic to listen to|<your topic name>|Yes|
+topics|topic to listen to|topic name|Yes|
 solr.collection|Solr Collection name where topic data needs to be pushed|Collection Name|Yes|
 solr.mode|Mode on which solr is running, pass solr node url|CLOUD or STANDALONE|Yes|
 solr.url|If `solr.mode` is `CLOUD`, pass comma seperated zookeeper url else pass standalone solr server url|url|Yes|
@@ -23,7 +23,7 @@ commit.within.ms|commit within ms value for solr update, if none passes defaults
 
 ### Deploy Steps:
 1. build with: mvn clean package
-2. In target look for directory bkatwal-kafka-connect-solr-sink-<version>. Copy this directory to plugins path.
+2. In target look for directory bkatwal-kafka-connect-solr-sink-< version >. Copy this directory to plugins path.
   
 ##### or download deployable artifact from : https://www.confluent.io/connector/solr-sink-connector/
 

@@ -1,4 +1,4 @@
-image: maven:latest
+image: maven:3-jdk-9
 
 stages:
   - build
@@ -10,12 +10,12 @@ build:
   script:
     - mvn compile
 
-#test:
-  #stage: test
-  #script:
-    #- mvn test
+test:
+  stage: test
+  script:
+    - mvn test
 
-#run:
-  #stage: run
-  #script:
-    #- mvn package
+run:
+  stage: run
+  script:
+    - mvn package

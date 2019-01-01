@@ -1,4 +1,4 @@
 build:
   stage: build
   script:
-    - mvn clean package
+    - - $MAVEN_HOME/bin/mvn clean package

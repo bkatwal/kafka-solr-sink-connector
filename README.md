@@ -1,22 +1,25 @@
 # kafka-solr-sink-connector
-This is simple Java based solr sink kafka connector, that takes plain json data from kafka topic and push to solr, uses solr cloud.
+This is simple Java based solr sink kafka connector, that takes plain json data from kafka topic and push to solr, both solr cloud and standalone mode supported.
 
-Note: for now only plain JSON data is supported and keep schemas.enable=false for value converter.
+Note: Only JSON data is supported and keep `schemas.enable=false` for value converter.
 
-Refer/Use configuration: <a href="https://github.com/bkatwal/kafka-solr-sink-connector/tree/master/config">config files</a>
+### Configs Description: 
 
-Mandatory Fields:
+Config Name|Description|Config Value|Is Mandatory?|
+-----------|-----------|------------|----|
+topics|topic to listen to|<your topic name>|Yes|
+solr.collection|Solr Collection name where topic data needs to be pushed|Collection Name|Yes|
+solr.mode|Mode on which solr is running, pass solr node url|CLOUD or STANDALONE|Yes|
+solr.url|If `solr.mode` is `CLOUD`, pass comma seperated zookeeper url else pass standalone solr server url|url|Yes|
+connector.class|Connector class name|com.bkatwal.kafkaproject.SolrSinkConnector|Yes|
+commit.within.ms|commit within ms value for solr update, if none passes defaults to 10 ms|int value|No|
 
-<pre>
-<code>
-topics=your toipic name
-  
-solr.collection=your solr collection name
-  
-solr.zkhosts=comma separated zookeeper hosts
+##### Refer/Use configuration: <a href="https://github.com/bkatwal/kafka-solr-sink-connector/tree/master/config">config files</a>
 
-  example: localhost:2181,localhost:2183,localhost:2182
- </code>
-</pre>
+### Features Supported:
+1. Json Data 
+2. One level of child document update supported. Just pass, additional field, `_childDocument` with the parent doc.
+3. Deleting a document is supported: To delete pass additional field `_delete_` in values(no need to maintain this field in solr/solr schema file), this field will be removed before indexing data to solr. Based on boolean values(true/false) in `_delete_`, delete/insert operation is triggered
 
-This connector can consume only JSON type object from kafka topic. Further, can be used for both delete and insert of document. To delete pass additional field `_delete_` in values(no need to maintain this field in solr/solr schema file), this field will be removed before indexing data to solr. Based on boolean values(true/false) in `_delete_`, delete/insert operation is triggered
+##### TODO
+1. Way to add Dynamic Field in solr document.

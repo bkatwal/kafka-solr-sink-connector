@@ -26,7 +26,9 @@ commit.within.ms|commit within ms value for solr update, if none passes defaults
     "field1": "doc1",
     "id":"1",
     "field2":"dome val,
-    "dynamicField":{"df1":"val1",
+    "dynamicField":
+    {
+      "df1":"val1",
       "df2":"val2",
       "df3":"val3"
     }

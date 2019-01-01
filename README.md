@@ -20,13 +20,26 @@ commit.within.ms|commit within ms value for solr update, if none passes defaults
 1. Json Data 
 2. One level of child document update supported. Just pass, additional field, `_childDocuments_` with the parent doc.
 3. Deleting a document is supported: To delete pass additional field `_delete_` in values(no need to maintain this field in solr/solr schema file), this field will be removed before indexing data to solr. Based on boolean values(true/false) in `_delete_`, delete/insert operation is triggered
+4. Dynamic fields update. Pass a Map field in json doc. The field name will be used as prefix, so set dynamic field in managed_schema accordingly. Example:
+```
+{
+    "field1": "doc1",
+    "id":"1",
+    "field2":"dome val,
+    "dynamicField":{"df1":"val1",
+      "df2":"val2",
+      "df3":"val3"
+    }
+  }
+  
+  This will be trnasformed in solr as:
+  dynamicField_df1 : val1, dynamicField_df2 : val2, dynamicField_df3 : val3 
+```
+For above dynamic field will look like: 
+`<dynamicField name="dynamicField_*" type="string" indexed="true" stored="true"/>`
 
 ### Deploy Steps:
 1. build with: mvn clean package
 2. In target look for directory bkatwal-kafka-connect-solr-sink-< version >. Copy this directory to plugins path.
   
 ##### or download deployable artifact from : https://www.confluent.io/connector/solr-sink-connector/
-
-##### TODO
-1. Way to add Dynamic Field in solr document.
-

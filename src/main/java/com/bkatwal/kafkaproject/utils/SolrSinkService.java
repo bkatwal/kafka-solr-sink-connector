@@ -47,7 +47,7 @@ public class SolrSinkService implements SinkService<String, SinkRecord> {
   public boolean deleteById(final String id) {
     UpdateResponse updateResponse;
     try {
-      updateResponse = solrClient.deleteById(collection, id, 10);
+      updateResponse = solrClient.deleteById(collection, id, commitWithinMs);
     } catch (SolrServerException | IOException e) {
       log.error("Unable to send delete request to solr");
       throw new SolrException(ErrorCode.SERVER_ERROR, "Unable to send delete request to solr", e);
@@ -61,7 +61,7 @@ public class SolrSinkService implements SinkService<String, SinkRecord> {
     UpdateResponse updateResponse;
     SolrInputDocument solrInputDocument = jsonSolrDocMapper.convertToSolrDocument(record);
     try {
-      updateResponse = solrClient.add(collection, solrInputDocument, 10);
+      updateResponse = solrClient.add(collection, solrInputDocument, commitWithinMs);
       log.debug("saved document: {}", solrInputDocument);
     } catch (SolrServerException | IOException e) {
       log.error("Unable to send update request to solr");

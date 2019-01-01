@@ -17,8 +17,10 @@ package com.bkatwal.kafkaproject.utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.solr.common.SolrInputDocument;
@@ -52,7 +54,7 @@ public class PlainJsonSolrDocMappersImpl implements JsonSolrDocMapper {
 
     Map<String, Object> obj = (Map<String, Object>) sinkRecord.value();
 
-    return toSolrDoc(obj);
+    return toSolrDoc(createDynamicFieldsForRecordIfExists(obj));
   }
 
   /*
@@ -73,6 +75,29 @@ public class PlainJsonSolrDocMappersImpl implements JsonSolrDocMapper {
       }
     });
 
+  }
+
+  private Map<String, Object> createDynamicFieldsForRecordIfExists(
+      final Map<String, Object> record) {
+
+    Map<String, Object> newRecord = new LinkedHashMap<>();
+
+    for (Entry<String, Object> entry : record.entrySet()) {
+
+      String entryKey = entry.getKey();
+      Object entryValue = entry.getValue();
+
+      if (entryValue instanceof Map) {
+        Map<String, Object> columnVal = (Map<String, Object>) entry.getValue();
+        String columnName = entry.getKey();
+        columnVal.forEach(
+            (key, val) -> newRecord.put(columnName.concat("_").concat(key), val));
+      } else {
+        newRecord.put(entryKey, entryValue);
+      }
+    }
+    record.clear();
+    return newRecord;
   }
 
   private Collection<SolrInputDocument> getChildDocuments(Object childDocuments) {

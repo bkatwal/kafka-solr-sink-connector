@@ -14,6 +14,8 @@
 
 package com.bkatwal.kafkaproject;
 
+import static com.bkatwal.kafkaproject.utils.SolrMode.CLOUD;
+
 import com.bkatwal.kafkaproject.utils.SolrMode;
 import java.util.Map;
 import org.apache.kafka.common.config.AbstractConfig;
@@ -59,7 +61,7 @@ public class SolrSinkConnectorConfig extends AbstractConfig {
         .define(SOLRURL_CONFIG, Type.STRING, Importance.HIGH, SOLRURL_DOC)
         .define(USERNAME_CONFIG, Type.STRING, "", Importance.MEDIUM, USERNAME_DOC)
         .define(PASSWORD_CONFIG, Type.PASSWORD, "", Importance.MEDIUM, PASSWORD_DOC)
-        .define(SOLRMODE_CONFIG, Type.STRING, "", Importance.MEDIUM, SOLRMODE_DOC)
+        .define(SOLRMODE_CONFIG, Type.STRING, CLOUD.name(), Importance.MEDIUM, SOLRMODE_DOC)
         .define(COMMIT_WITHIN_MS, Type.INT, 10, Importance.MEDIUM, COMMIT_WITHIN_MS_DOC);
   }
 

@@ -10,10 +10,10 @@ build:
   script:
     - mvn compile
 
-test:
-  stage: test
-  script:
-    - mvn test
+#test:
+  #stage: test
+  #script:
+    #- mvn test
 
 run:
   stage: run

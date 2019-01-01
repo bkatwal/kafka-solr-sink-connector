@@ -15,7 +15,7 @@ build:
   #script:
     #- mvn test
 
-run:
-  stage: run
-  script:
-    - mvn package
+#run:
+  #stage: run
+  #script:
+    #- mvn package

@@ -36,10 +36,10 @@ commit.within.ms|commit within ms value for solr update, if none passes defaults
     }
   }
   
-  This will be trnasformed in solr as:
+  This will be transformed in solr as:
   dynamicField_df1 : val1, dynamicField_df2 : val2, dynamicField_df3 : val3 
 ```
-For above dynamic field will look like: 
+You can have any field name for dynamic field, just have this defined in managed_schema. So, for above to work, dynamic field meeds to be defined in managed_schema file as below: 
 `<dynamicField name="dynamicField_*" type="string" indexed="true" stored="true"/>`
 
 ### Deploy Steps:

@@ -1,4 +1,4 @@
-### GitLab [![build status](https://gitlab.com/bikas.katwal10/kafka-solr-sink-connector/badges/master/build.svg)](https://gitlab.com/bikas.katwal10/kafka-solr-sink-connector/master)
+### GitLab [![build status](https://gitlab.com/bikas.katwal10/kafka-solr-sink-connector/badges/master/build.svg)](https://gitlab.com/bikas.katwal10/kafka-solr-sink-connector/pipelines)
 
 # kafka-solr-sink-connector
 This is simple Java based solr sink kafka connector, that takes plain json data from kafka topic and push to solr, both solr cloud and standalone mode supported.

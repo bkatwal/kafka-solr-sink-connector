@@ -11,25 +11,11 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bkatwal.kafkaproject;
+package com.bkatwal.kafkaproject.api;
 
-import org.apache.solr.common.StringUtils;
+import org.apache.kafka.connect.sink.SinkRecord;
 
-public class VersionUtil {
-  static final String DEFAULT = "0.0.0.0";
+public interface JsonDocMapper<T> {
 
-  public static String getVersion(Class<?> cls) {
-    String result;
-
-    try {
-      result = cls.getPackage().getImplementationVersion();
-
-      if (StringUtils.isEmpty(result)) {
-        result = DEFAULT;
-      }
-    } catch (Exception ex) {
-      result = DEFAULT;
-    }
-    return result;
-  }
+  T convert(SinkRecord sinkRecord);
 }

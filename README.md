@@ -46,4 +46,4 @@ You can have any field name for dynamic field, just have this defined in managed
 1. build with: mvn clean package
 2. In target look for directory bkatwal-kafka-connect-solr-sink-< version >. Copy this directory to plugins path.
   
-##### or download deployable artifact from : https://www.confluent.io/connector/solr-sink-connector/
+##### or download deployable artifact from : https://www.confluent.io/hub/bkatwal/bkatwal-kafka-connect-solr-sink

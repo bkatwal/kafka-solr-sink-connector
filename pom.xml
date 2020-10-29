@@ -10,8 +10,8 @@
     <name>kafka-solr-sink-connector</name>
 
     <properties>
-        <kafka.version>1.1.0</kafka.version>
-        <junit.version>4.12</junit.version>
+        <kafka.version>2.6.0</kafka.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
@@ -46,6 +46,13 @@
             <version>${kafka.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

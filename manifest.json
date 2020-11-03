@@ -25,7 +25,7 @@
 
   "logo": "",
 
-  "name": "kafka-solr-sink-connector",
+  "name": "bkatwal-kafka-connect-solr-sink",
 
   "owner": {
     "name": "Bikas Katwal.",

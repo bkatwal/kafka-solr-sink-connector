@@ -23,8 +23,6 @@
     }
   ],
 
-  "logo": "",
-
   "name": "bkatwal-kafka-connect-solr-sink",
 
   "owner": {
